@@ -6,21 +6,12 @@
 				<path d="M0.126923 4.92308C0.0423077 4.83847 0 4.71154 0 4.62693C0 4.54231 0.0423077 4.41539 0.126923 4.33077L0.719231 3.73847C0.888462 3.56924 1.14231 3.56924 1.31154 3.73847L1.35385 3.78077L3.68077 6.27693C3.76538 6.36154 3.89231 6.36154 3.97692 6.27693L9.64615 0.396159H9.68846C9.85769 0.226928 10.1115 0.226928 10.2808 0.396159L10.8731 0.988467C11.0423 1.1577 11.0423 1.41154 10.8731 1.58077L4.10385 8.60385C4.01923 8.68847 3.93462 8.73077 3.80769 8.73077C3.68077 8.73077 3.59615 8.68847 3.51154 8.60385L0.211538 5.05001L0.126923 4.92308Z" fill="white"/>
 			</svg>
 		</div>
-		<div class="check-box__value" @click="isPopupVisibility=true">
+		<div class="check-box__value" @click="clickOnText">
 			{{checkBoxData.taskText}}
 		</div>
-		<CorrectTaskPopup
-			:visibility="isPopupVisibility"
-			@closePopup="isPopupVisibility = false"
-			:taskText="checkBoxData.taskText"
-			@saveNewTaskText="changeTaskText"
-			:checkBoxData="checkBoxData"
-		/>
 	</div>
 </template>
 <script>
-	import CorrectTaskPopup from "@/components/CorrectTaskPopup"
-	import { ref } from 'vue';
 	export default
 	{
 		name: "v-check-box",
@@ -30,21 +21,18 @@
 				required: true
 			},
 		},
-		components:{
-			CorrectTaskPopup,
-		},
 		setup(props, { emit })
 		{
-			let isPopupVisibility = ref(false);
-
 			function clickOnCheckBox() {
 				emit('check');
 			}
-
+			function clickOnText() {
+				emit('clickOnText', props.checkBoxData.index);
+		}
 			function changeTaskText(newtext, index) {
 				emit('changeTaskText', newtext, index);
 			}
-			return{ isPopupVisibility, clickOnCheckBox,changeTaskText}
+			return{ clickOnText, clickOnCheckBox, changeTaskText}
 		},
 	}
 </script>

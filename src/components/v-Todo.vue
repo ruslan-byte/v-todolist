@@ -1,7 +1,7 @@
 <template>
 	<div class="v-todo">
 		<vToDoList
-			v-for="(item, index) of TodoData"
+			v-for="(item, index) of todoData"
 			:key="index"
 			:data="item"
 			@changeTaskText="changeTaskText"
@@ -16,7 +16,7 @@
 		name:"v-todo",
 		components:{vToDoList},
 		setup(){
-			let TodoData = ref([
+			let todoData = ref([
 				{
 					date:'20 января',
 					checkBoxes: [
@@ -37,14 +37,12 @@
 				},
 			])
 			function changeTaskText(newtext, checkBoxIndex) {
-
-				// let checkBox =
-				// 	this.TodoData.find(
-				// 		(item)=>{item.checkBoxes === checkBoxIndex});
-
-				// checkBox.taskText = newText;
+				/*
+				** Ищем чекбокс, которому соответствует полученный индекс, и присваиваем найденному чекбоксу полученный текст
+				*/
+				todoData.value.forEach((todoList) => {todoList.checkBoxes.forEach((checkBox)=> {checkBox.taskText = (checkBox.index === checkBoxIndex)? newtext : checkBox.taskText; })})
 			}
-			return {TodoData,changeTaskText}
+			return {todoData,changeTaskText}
 		}
 	}
 </script>

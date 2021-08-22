@@ -1,12 +1,11 @@
 <template>
 	<transition name="correct-task-popup-animation">
-		<div class="correct-task-popup" v-if="visibility">
+		<div class="correct-task-popup" v-if="visibility" @keydown.esc="closePopup" tabindex="0" autofocus>
 			<div class="correct-task-popup__background" @click="closePopup" />
 			<div class="correct-task-popup__body">
 				<textarea
 					v-model="newTaskText"
 					placeholder="Новая задача"
-					v-on:keyup.esc="closePopup"
 					v-on:keyup.ctrl.enter="saveNewTaskTextAndClose"
 				/>
 				<vueButton @click="saveNewTaskTextAndClose">
@@ -24,22 +23,19 @@
 		props: {
 			visibility:Boolean,
 			taskText:String,
-			checkBoxData:Object,
 		},
 		components:{
 			vueButton,
 		},
 		setup(props,{ emit }){
-
 			let newTaskText = ref(props.taskText);
-
 			function closePopup() {
 				newTaskText.value = props.taskText;
 				emit('closePopup');
 			}
 			function valideText(text){
 				let isNotEmpty = text != '';
-				return (isNotEmpty)? true : false;
+				return isNotEmpty;
 			}
 			function saveNewTaskTextAndClose() {
 				if(valideText(newTaskText.value))
