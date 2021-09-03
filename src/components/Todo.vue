@@ -7,11 +7,11 @@
 			@changeTaskText="changeTaskText"
 			@clickOnText="openPopup"
 		/>
-		<component :is="vButton" ></component>
-
 		<addTaskPlace :active="isAddTaskPlaceVisibility" />
-
-		<vButton @click="isAddTaskPlaceVisibility = !isAddTaskPlaceVisibility" >Добавить задачу</vButton>
+		<div class="v-todo__buttons">
+			<vButton @click="isAddTaskPlaceVisibility = true" :class="{'v-todo__button-active' : isAddTaskPlaceVisibility} ">Добавить задачу</vButton>
+			<vButton @click="isAddTaskPlaceVisibility = false" class="v-todo__button-close" :class="{'v-todo__button-active' : isAddTaskPlaceVisibility} ">Отмена</vButton>
+		</div>
 		<CorrectTaskPopup
 			:visibility="isPopupVisibility"
 			@closePopup="isPopupVisibility = false"
@@ -67,6 +67,10 @@
 	}
 </script>
 <style lang="scss">
+	.v-todo__buttons
+	{
+		display: flex;
+	}
 	.v-todo
 	{
 		padding: 20px;
@@ -74,5 +78,19 @@
 		max-width: 474px;
 		border-radius: 4px;
 		background: #fff;
+	}
+	.v-todo__button-active{ width: 60%;}
+	.v-todo__button-active:not(.v-todo__button-close){margin-right: 10%;}
+	.v-todo__button-close
+	{
+		display: none;
+	}
+	.v-todo__button-active.v-todo__button-close
+	{
+		display: block;
+		width: 30%;
+		background: #F2F2F2;
+		color: black;
+		border: 1px solid #6b6b6b;
 	}
 </style>
